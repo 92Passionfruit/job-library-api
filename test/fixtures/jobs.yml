@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  scope: MyText
+  ownership: MyText
+  key_knowledge_and_skills: MyText
+  job_family: one
+  job_level: one
+
+two:
+  title: MyString
+  scope: MyText
+  ownership: MyText
+  key_knowledge_and_skills: MyText
+  job_family: two
+  job_level: two
