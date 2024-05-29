@@ -1,33 +1,27 @@
 module Types
   class QueryType < Types::BaseObject
-    field :id, ID, null: false
-    field :title, String
-    field :scope, String
-    field :ownership, String
-    field :key_knowledge_and_skills, String
-    field :job_family_name, String
-    field :job_level_name, String
-    field :testField, String, null: false,
-      description: "A test field for demonstration purposes."
-
-    # Resolver method for the job_family_name field
-    def job_family_name
-      object.job_family.name
+    # Defining jobs
+    field :jobs, [Types::JobType], null: true, description: "Fetches all jobs" do
+      argument :job_level, String, required: false
+      argument :job_family, String, required: false
+      argument :title, String, required: false
     end
 
-    # Resolver method for the job_level_name field
-    def job_level_name
-      object.job_level.name
+    # Jobs resolver
+    def jobs(job_level: nil, job_family: nil, title: nil)
+      jobs = Job.all
+      jobs = jobs.where(job_level: job_level) if job_level
+      jobs = jobs.where(job_family: job_family) if job_family
+      jobs = jobs.where('title ILIKE ?', "%#{title}%") if title
+      jobs
     end
 
-    # Resolver method for the testField
-    def testField
-      "Hello, world!"
+    field :job, Types::JobType, null: false, description: "Fetch a single job by id" do
+      argument :id, ID, required: true
     end
 
-    # Resolver method for the jobs field
-    def jobs
-      Job.all
+    def job(id:)
+      Job.find(id)
     end
   end
 end
