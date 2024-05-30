@@ -42,7 +42,3 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_28_003645) do
   add_foreign_key "jobs", "job_families"
   add_foreign_key "jobs", "job_levels"
 end
-
-# class JobLibraryApiSchema < GraphQL::Schema
-#   query(Types::QueryType)
-# end

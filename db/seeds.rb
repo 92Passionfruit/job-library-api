@@ -18,7 +18,7 @@ job_levels.each do |level|
 end
 
 # Create sample jobs
-50.times do
+20.times do
     Job.create!(
         title: Faker::Job.title,
         scope: Faker::Lorem.paragraphs(number: 3).join("\n\n"),

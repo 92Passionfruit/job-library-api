@@ -9,10 +9,14 @@ module Types
 
     # Jobs resolver
     def jobs(job_level: nil, job_family: nil, title: nil)
-      jobs = Job.all
-      jobs = jobs.where(job_level: job_level) if job_level
-      jobs = jobs.where(job_family: job_family) if job_family
+      jobs = Job.includes(:job_level, :job_family)
+
+      # Case-insensitive using ILIKE
+      jobs = jobs.joins(:job_level).where('job_levels.name ILIKE ?', "%#{job_level}%") if job_level
+      jobs = jobs.joins(:job_family).where('job_families.name ILIKE ?', "%#{job_family}%") if job_family
       jobs = jobs.where('title ILIKE ?', "%#{title}%") if title
+
+
       jobs
     end
 
